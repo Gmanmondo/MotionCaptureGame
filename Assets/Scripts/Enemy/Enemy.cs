@@ -1,16 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
     public float speed = 3f; //change speed if needed
-    public int health = 5; // Change if needed
+    public float health = 5; // Change if needed
     // public float knockbackForce = 2f; 
 
     private Transform player;
@@ -37,7 +30,7 @@ public class Enemy : MonoBehaviour
         }
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         health -= damage;
 

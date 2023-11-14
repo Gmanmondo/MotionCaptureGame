@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     bool grounded;
     public float groundDrag;
 
+    public float health;
+
     void Start()
     {
         rb = GetComponent<Rigidbody>();
@@ -34,6 +36,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             rb.drag = 0;
+        }
+        if (health <= 0)
+        {
+            Die();
         }
     }
 
@@ -65,5 +71,11 @@ public class PlayerController : MonoBehaviour
     {
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+    }
+
+    private void Die()
+    {
+        Destroy(this);
+        //game over screen
     }
 }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerAttacks : MonoBehaviour
 {
     public GameObject slashHitBox;
-    public GameObject wideSlashHitBox;
+    public GameObject crossSlashHitBox;
 
     private bool attacking;
     public float attackDamage;
@@ -37,9 +37,9 @@ public class PlayerAttacks : MonoBehaviour
     IEnumerator WideSlash(float x)
     {
         attacking = true;
-        wideSlashHitBox.SetActive(true);
+        crossSlashHitBox.SetActive(true);
         yield return new WaitForSeconds(x);
-        wideSlashHitBox.SetActive(false);
+        crossSlashHitBox.SetActive(false);
         attacking = false;
     }
 }

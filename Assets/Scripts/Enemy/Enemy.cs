@@ -1,16 +1,20 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
+    private Rigidbody rb;
+    public PlayerAttacks attack;
     public float speed = 3f; //change speed if needed
     public float health = 5; // Change if needed
-    // public float knockbackForce = 2f; 
+    public float knockbackForce; 
 
     private Transform player;
 
     void Start()
     {
         player = GameObject.Find("Player").transform;
+        rb = this.gameObject.GetComponent<Rigidbody>();
     }
 
     void Update()
@@ -23,7 +27,8 @@ public class Enemy : MonoBehaviour
     {
         if (other.gameObject == player.gameObject)
         {
-            TakeDamage(1); //change number based on need
+            if(attack.attacking)
+                TakeDamage(1); //change number based on need
 
             // Knockback(); //knockback if needed
 
@@ -36,22 +41,26 @@ public class Enemy : MonoBehaviour
 
         if (health <= 0)
         {
-            Die();
+            StartCoroutine(Die());
         }
     }
 
-    /* void Knockback()
+    void Knockback()
     {
 
         Vector3 knockbackDirection = (transform.position - player.position).normalized;
         GetComponent<Rigidbody>().AddForce(knockbackDirection * knockbackForce, ForceMode.Impulse);
         //knockback if needed
     }
-    */
+    
 
-    void Die()
+    IEnumerator Die()
     {
         //death animation (if any)
+        Knockback();
+
+        yield return new WaitForSeconds(5f);
+
         Destroy(this.gameObject);
     }
 }

@@ -10,6 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed;
     [SerializeField] private Transform orientation;
     [SerializeField] private Animator animator;
+    [SerializeField] private PlayerAttacks attack;
 
     public float playerHeight;
     public LayerMask ground;
@@ -49,7 +50,7 @@ public class PlayerController : MonoBehaviour
         float vertical = Input.GetAxisRaw("Vertical");
         direction = new Vector3(horizontal, 0f, vertical).normalized;
 
-        if (direction.magnitude > 0)
+        if (direction.magnitude > 0 && !attack.attacking)
         {
             animator.SetBool("Running", true);
             direction = orientation.forward * vertical + orientation.right * horizontal;

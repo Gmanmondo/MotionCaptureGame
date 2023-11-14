@@ -6,9 +6,11 @@ public class PlayerAttacks : MonoBehaviour
 {
     public GameObject slashHitBox;
     public GameObject crossSlashHitBox;
+    public Animator animator;
 
-    private bool attacking;
+    public bool attacking;
     public float attackDamage;
+    float a;
 
     [SerializeField] private float attackTime;
 
@@ -18,10 +20,13 @@ public class PlayerAttacks : MonoBehaviour
         if (Input.GetMouseButton(0) && !attacking)
         {
             StartCoroutine(CrossSlash(attackTime));
+            
+            Debug.Log("Swing1");
         }
         if (Input.GetMouseButton(1) && !attacking)
         {
             StartCoroutine(WideSlash(attackTime));
+            Debug.Log("Swing2");
         }
     }
 
@@ -29,17 +34,31 @@ public class PlayerAttacks : MonoBehaviour
     {
         attacking = true;
         slashHitBox.SetActive(true);
+        a = 1f;
+        animator.SetLayerWeight(animator.GetLayerIndex("Swing1"), a);
+        animator.SetBool("Swing1", true);
+
         yield return new WaitForSeconds(x);
+
         slashHitBox.SetActive(false);
+        animator.SetBool("Swing1", false);
         attacking = false;
+        a = 0;
     }
 
     IEnumerator WideSlash(float x)
     {
         attacking = true;
         crossSlashHitBox.SetActive(true);
+        a = 1f;
+        animator.SetLayerWeight(animator.GetLayerIndex("Swing2"), a);
+        animator.SetBool("Swing2", true);
+
         yield return new WaitForSeconds(x);
+
         crossSlashHitBox.SetActive(false);
+        animator.SetBool("Swing2", false);
         attacking = false;
+        a = 0;
     }
 }

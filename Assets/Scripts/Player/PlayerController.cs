@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     private Vector3 direction;
     [SerializeField] private float speed;
     [SerializeField] private Transform orientation;
+    [SerializeField] private Animator animator;
 
     public float playerHeight;
     public LayerMask ground;
@@ -50,8 +51,13 @@ public class PlayerController : MonoBehaviour
 
         if (direction.magnitude > 0)
         {
+            animator.SetBool("Running", true);
             direction = orientation.forward * vertical + orientation.right * horizontal;
             rb.AddForce(direction.normalized * speed, ForceMode.Force);
+        }
+        else
+        {
+            animator.SetBool("Running", false);
         }
     }
 

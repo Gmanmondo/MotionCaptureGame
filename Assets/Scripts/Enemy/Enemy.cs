@@ -52,6 +52,6 @@ public class Enemy : MonoBehaviour
     void Die()
     {
         //death animation (if any)
-        Destroy(gameObject);
+        Destroy(this.gameObject);
     }
 }

@@ -6,7 +6,7 @@ public class Enemy : MonoBehaviour
     private Rigidbody rb;
     public PlayerAttacks attack;
     public float speed = 3f; //change speed if needed
-    public float health = 5; // Change if needed
+    public float health = 5; // Change if neededneed
     public float knockbackForce; 
 
     private Transform player;
@@ -38,6 +38,8 @@ public class Enemy : MonoBehaviour
     public void TakeDamage(float damage)
     {
         health -= damage;
+
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.hurt, this.transform.position);
 
         if (health <= 0)
         {

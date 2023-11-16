@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
 
 public class PlayerAttacks : MonoBehaviour
 {
@@ -38,6 +40,8 @@ public class PlayerAttacks : MonoBehaviour
         animator.SetLayerWeight(animator.GetLayerIndex("Swing1"), a);
         animator.SetBool("Swing1", true);
 
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.attack, this.transform.position);
+
         yield return new WaitForSeconds(x);
 
         slashHitBox.SetActive(false);
@@ -53,6 +57,8 @@ public class PlayerAttacks : MonoBehaviour
         a = 1f;
         animator.SetLayerWeight(animator.GetLayerIndex("Swing2"), a);
         animator.SetBool("Swing2", true);
+
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.attack, this.transform.position);
 
         yield return new WaitForSeconds(x);
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using FMOD.Studio;
 
 public class PlayerController : MonoBehaviour
 {
@@ -19,8 +20,16 @@ public class PlayerController : MonoBehaviour
 
     public float health;
 
+    float horizontal;
+    float vertical;
+
+    private EventInstance playerFootsteps;
+
     void Start()
     {
+        playerFootsteps = AudioManager.instance.CreateInstance(FMODEvents.instance.playerFootSteps);
+
+
         rb = GetComponent<Rigidbody>();
         LockCursor();
     }
@@ -43,11 +52,16 @@ public class PlayerController : MonoBehaviour
             Die();
         }
     }
+    
+    private void FixedUpdate()
+    {
+        UpdateSound();
+    }
 
     private void Move()
     {
-        float horizontal = Input.GetAxisRaw("Horizontal");
-        float vertical = Input.GetAxisRaw("Vertical");
+        horizontal = Input.GetAxisRaw("Horizontal");
+        vertical = Input.GetAxisRaw("Vertical");
         direction = new Vector3(horizontal, 0f, vertical).normalized;
 
         if (direction.magnitude > 0 && !attack.attacking)
@@ -83,5 +97,24 @@ public class PlayerController : MonoBehaviour
     {
         Destroy(this);
         //game over screen
+        AudioManager.instance.PlayOneShot(FMODEvents.instance.die, this.transform.position);
+    }
+
+    private void UpdateSound()
+    {
+        if (horizontal != 0 || vertical != 0)
+        {
+            PLAYBACK_STATE playbackState;
+            playerFootsteps.getPlaybackState(out playbackState);
+
+            if (playbackState.Equals(PLAYBACK_STATE.STOPPED))
+            {
+                playerFootsteps.start();
+            }
+        }
+        else
+        {
+            playerFootsteps.stop(STOP_MODE.ALLOWFADEOUT);
+        }
     }
 }
